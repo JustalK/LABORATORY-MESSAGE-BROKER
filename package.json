@@ -1,0 +1,24 @@
+{
+  "name": "LABORATORY-REDIS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://justalk: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@github.com/justalk/LABORATORY-REDIS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justalk/LABORATORY-REDIS/issues"
+  },
+  "homepage": "https://github.com/justalk/LABORATORY-REDIS#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "redis": "^4.0.1"
+  }
+}
