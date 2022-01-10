@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  webservice:
+    build: ./webservice
+    environment:
+      - REDIS_SERVER_IP=redis-server
+    ports:
+      - "3000:3000"
+  redis-server:
+    build: ./redis-server
+    volumes:
+      - /mnt/c/redis-data:/redis-data
