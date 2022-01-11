@@ -1,13 +1,24 @@
 version: "3.8"
 
 services:
-  webservice:
-    build: ./webservice
+  redis-server:
+    build: ./redis-server
+    networks:
+      - redis-server
+    volumes:
+      - /mnt/c/redis-data:/redis-data
+  server1:
+    build: ./server1
     environment:
       - REDIS_SERVER_IP=redis-server
     ports:
       - "3000:3000"
+  server2:
+    build: ./server2
+    environment:
+      - REDIS_SERVER_IP=redis-server
+    ports:
+      - "3001:3000"
+networks:
   redis-server:
-    build: ./redis-server
-    volumes:
-      - /mnt/c/redis-data:/redis-data
+    driver: bridge
