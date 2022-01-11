@@ -1,7 +1,6 @@
 // Import packages.
 const express = require('express')
 const redis = require('ioredis')
-const NRP = require("node-redis-pubsub");
 const { promisify } = require('util')
 
 // Create and configure a webserver.
@@ -10,20 +9,27 @@ app.use(express.json())
 
 // Create and configure a Redis client.
 const redisClient = redis.createClient('2999', process.env.REDIS_SERVER_IP)
+redisClient.on('connect', () => console.log('Connected to Redis') )
 redisClient.on('error', error =>  console.error(error))
 
-redisClient.subscribe("send-user-data", (err, count) => {
-  if (err) console.error(err.message);
-  console.log(`Subscribed to ${count} channels.`);
+/**
+* Register the event of the server 1
+**/
+redisClient.subscribe("SERVER_1", (err, count) => {
+  console.log(`Subscribed to SERVER_1.`);
 });
 
+/**
+* Managing when the server is receiving a message from server 2
+**/
 redisClient.on("message", (channel, message) => {
-  console.log(channel, message)
+  if (channel === "SERVER_1") {
+    console.log("SERVER_2 : ", message)
+  }
 });
 
 app.post('/call/server1', async (req, res) => {
     const data = "FROM SERVER 2";
-    nrp.emit("SERVER_2", data);
 })
 
 // Create an endpoint to set a key value pair.

@@ -23,7 +23,6 @@
   "dependencies": {
     "express": "^4.17.2",
     "ioredis": "^4.28.3",
-    "node-redis-pubsub": "^5.0.0",
     "redis": "^4.0.1"
   }
 }

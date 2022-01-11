@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "ioredis": "^4.28.3",
+    "node-redis-pubsub": "^5.0.0",
+    "redis": "^4.0.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "docker-compose up --build"
   },
   "repository": {
     "type": "git",
@@ -16,9 +23,5 @@
   "bugs": {
     "url": "https://github.com/justalk/LABORATORY-REDIS/issues"
   },
-  "homepage": "https://github.com/justalk/LABORATORY-REDIS#readme",
-  "dependencies": {
-    "express": "^4.17.2",
-    "redis": "^4.0.1"
-  }
+  "homepage": "https://github.com/justalk/LABORATORY-REDIS#readme"
 }
