@@ -23,12 +23,16 @@ app.get('/call/server2/from/server1', async (req, res) => {
 
 // Create an endpoint to set a key value pair.
 app.post('/setValue', async (req, res) => {
-
+  await redisClient.set(req.body.key, req.body.value);
+  console.log(req.body.key, req.body.value)
+  res.status(200);
 })
 
 // Create an endpoint to get a key value pair.
 app.get('/getValue/:key', async (req, res) => {
-
+  const rsl = await redisClient.get(req.params.key);
+  console.log(rsl, req.params.key)
+  res.status(200).send(rsl);
 })
 
 // Start the webserver.

@@ -30,16 +30,19 @@ redisClient.on("message", (channel, message) => {
 
 app.post('/call/server1', async (req, res) => {
     const data = "FROM SERVER 2";
+    res.status(200);
 })
 
 // Create an endpoint to set a key value pair.
 app.post('/setValue', async (req, res) => {
-
+  redisClient.set(req.key, req.value);
+  res.status(200);
 })
 
 // Create an endpoint to get a key value pair.
 app.get('/getValue/:key', async (req, res) => {
-
+  const rsl = redisClient.get(req.key);
+  res.status(200);
 })
 
 // Start the webserver.
