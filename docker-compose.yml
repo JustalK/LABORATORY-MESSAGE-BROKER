@@ -5,18 +5,25 @@ services:
     build: ./redis-server
     volumes:
       - /mnt/c/redis-data:/redis-data
+  nginx:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "8080:8080"
   server1:
     build: ./server1
     environment:
       - REDIS_SERVER_IP=redis-server
     ports:
-      - "3000:3000"
+      - "3006:3006"
   server2:
     build: ./server2
     environment:
       - REDIS_SERVER_IP=redis-server
     ports:
-      - "3001:3000"
+      - "3001:3001"
 networks:
   redis-server:
     driver: bridge
