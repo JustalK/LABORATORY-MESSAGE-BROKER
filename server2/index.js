@@ -28,6 +28,11 @@ app.post('/setValue', async (req, res) => {
   res.status(200);
 })
 
+// Create a test endpoint
+app.get('/', async (req, res) => {
+  res.status(200).send(true);
+})
+
 // Create an endpoint to get a key value pair.
 app.get('/getValue/:key', async (req, res) => {
   const rsl = await redisClient.get(req.params.key);

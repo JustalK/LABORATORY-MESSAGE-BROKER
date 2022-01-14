@@ -5,25 +5,37 @@ services:
     build: ./redis-server
     volumes:
       - /mnt/c/redis-data:/redis-data
+    networks:
+      kevin-network:
   nginx:
     image: jwilder/nginx-proxy
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    networks:
+      kevin-network:
   server1:
     build: ./server1
     environment:
       - REDIS_SERVER_IP=redis-server
+      - VIRTUAL_HOST=api.server1.net
+      - VIRTUAL_PORT=3000
     ports:
-      - "3006:3006"
+      - "3000:3000"
+    networks:
+      kevin-network:
   server2:
     build: ./server2
     environment:
       - REDIS_SERVER_IP=redis-server
+      - VIRTUAL_HOST=api.server2.net
+      - VIRTUAL_PORT=3000
     ports:
-      - "3001:3001"
+      - "3001:3000"
+    networks:
+      kevin-network:
 networks:
-  redis-server:
-    driver: bridge
+  kevin-network:
