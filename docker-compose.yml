@@ -3,12 +3,14 @@ version: "3.8"
 services:
   redis-server:
     build: ./redis-server
+    container_name: labo-redis
     volumes:
       - /mnt/c/redis-data:/redis-data
     networks:
       kevin-network:
   nginx:
     image: jwilder/nginx-proxy
+    container_name: labo-nginx
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx/conf.d:/etc/nginx/conf.d
@@ -17,8 +19,25 @@ services:
       - "443:443"
     networks:
       kevin-network:
+  mongodb:
+    image: mongo:latest
+    container_name: labo-mongodb
+    hostname: mongodb
+    volumes:
+        - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        - ./mongodb/data/db/:/data/db/
+        - ./mongodb/data/log/:/var/log/mongodb/
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: admin
+        MONGO_INITDB_ROOT_PASSWORD: test
+        MONGO_INITDB_DATABASE: test
+    ports:
+        - "27017:27017"
+    networks:
+      kevin-network:
   server1:
     build: ./server1
+    container_name: labo-server1
     environment:
       - REDIS_SERVER_IP=redis-server
       - VIRTUAL_HOST=api.server1.net
@@ -29,6 +48,7 @@ services:
       kevin-network:
   server2:
     build: ./server2
+    container_name: labo-server2
     environment:
       - REDIS_SERVER_IP=redis-server
       - VIRTUAL_HOST=api.server2.net

@@ -17,6 +17,7 @@ Example how to make communication with messages between two microservers using `
 Example how to persist the data even after interruption of the server.
 Example how to use nginx to create a reverse proxy
 Example how to create micro services
+Example how to create a container with mongodb
 
 ## Links
 
