@@ -24,7 +24,7 @@ services:
     container_name: labo-mongodb
     hostname: mongodb
     volumes:
-        - ./mongodb/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        - ./mongodb/init/:/docker-entrypoint-initdb.d/:ro
         - ./mongodb/data/db/:/data/db/
         - ./mongodb/data/log/:/var/log/mongodb/
     environment:
@@ -32,8 +32,8 @@ services:
         MONGO_INITDB_ROOT_PASSWORD: test
         MONGO_INITDB_DATABASE: test
     ports:
-        - "27017:27017"
-    command: [--auth]
+        - "28017:28017"
+    command: mongod --port 28017
     networks:
       kevin-network:
   server1:

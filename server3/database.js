@@ -16,14 +16,11 @@ module.exports = {
   * @param {string} db_password The password of the db
   * @return {Object} The data of the db
   **/
-  parse_db_uri: (db_name, db_uri, db_username, db_password, db_auth = '') => {
-    db_uri += db_name
-    const split_uri = db_uri.split('/')
-
+  parse_db_uri: (db, db_host, db_port, db_name, db_username, db_password, db_auth = '') => {
     const db_data = {}
-    db_data.db = split_uri[3]
-    db_data.host = split_uri[2].split(':')[0]
-    db_data.port = split_uri[2].split(':')[1]
+    db_data.db = db
+    db_data.host = db_host
+    db_data.port = db_port
     db_data.username = db_username
     db_data.password = db_password
     db_data.authsource = db_auth
@@ -60,9 +57,8 @@ module.exports = {
   * @param {string} db_username The username of the db
   * @param {string} db_password The password of the db
   **/
-  mongoose_connect: (db_name, db_uri, db_username, db_password, db_auth = '') => {
-    console.log('HEYY')
-    const db_data = module.exports.parse_db_uri(db_name, db_uri, db_username, db_password, db_auth)
+  mongoose_connect: (db, db_host, db_port, db_name, db_username, db_password, db_auth = '') => {
+    const db_data = module.exports.parse_db_uri(db, db_host, db_port, db_name, db_username, db_password, db_auth)
     const db_uri_data = module.exports.create_mongo_uri(db_data)
 
     console.log(db_uri_data)
