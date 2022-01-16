@@ -2,12 +2,13 @@
 
 ## Description
 
-This project is a project for testing how to use multiple servers, how to make them communicating between them using event `RabbitMQ` and message `Redis`. I also use this project for exploring the different image that you can find on the `docker` website and how to use them.
+This project is a project for testing how to use multiple servers, how to make them communicating between them using event, message `Redis`, `RabbitMQ` or HTTP request. I also use this project for exploring the different image that you can find on the `docker` website and how to use them.
 
 ## Experiences
 
 - **Server1 && Server2:** Communication between server using Redis
 - **Server3:** Connection of the server to the container `mongodb`
+- **Server4 && Server5:** Communication between server using Axios and http request
 
 ## Docker-compose
 
@@ -27,6 +28,8 @@ You can connect to the different server using those url:
 - **server1**: api.server1.net
 - **server2**: api.server2.net
 - **server3**: api.server3.net
+- **server4**: api.server4.net
+- **server5**: api.server5.net
 
 #### Adding new proxy
 

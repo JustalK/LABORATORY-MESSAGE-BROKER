@@ -75,5 +75,33 @@ services:
       - mongodb
     networks:
       kevin-network:
+  server4:
+    build: ./server4
+    container_name: labo-server4
+    environment:
+      - REDIS_SERVER_IP=redis-server
+      - SERVER_5_API=server5:3000
+      - VIRTUAL_HOST=api.server4.net
+      - VIRTUAL_PORT=3000
+    ports:
+      - "3003:3000"
+    depends_on:
+      - mongodb
+      - server5
+    networks:
+      kevin-network:
+  server5:
+    build: ./server5
+    container_name: labo-server5
+    environment:
+      - REDIS_SERVER_IP=redis-server
+      - VIRTUAL_HOST=api.server5.net
+      - VIRTUAL_PORT=3000
+    ports:
+      - "3004:3000"
+    depends_on:
+      - mongodb
+    networks:
+      kevin-network:
 networks:
   kevin-network:
