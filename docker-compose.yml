@@ -45,6 +45,8 @@ services:
       - VIRTUAL_PORT=3000
     ports:
       - "3000:3000"
+    depends_on:
+      - redis-server
     networks:
       kevin-network:
   server2:
@@ -56,6 +58,8 @@ services:
       - VIRTUAL_PORT=3000
     ports:
       - "3001:3000"
+    depends_on:
+      - redis-server
     networks:
       kevin-network:
   server3:
@@ -67,6 +71,8 @@ services:
       - VIRTUAL_PORT=3000
     ports:
       - "3002:3000"
+    depends_on:
+      - mongodb
     networks:
       kevin-network:
 networks:
