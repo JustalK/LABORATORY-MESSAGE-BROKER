@@ -1,2 +1,4 @@
 node_modules
 mongodb/data
+rabbitmq/data
+rabbitmq/log

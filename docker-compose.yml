@@ -19,6 +19,20 @@ services:
       - "443:443"
     networks:
       kevin-network:
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: labo-rabbitmq
+    volumes:
+      - ./rabbitmq/log/:/var/log/rabbitmq/
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+    environment:
+        RABBITMQ_DEFAULT_USER: guess
+        RABBITMQ_DEFAULT_PASS: guess
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      kevin-network:
   mongodb:
     image: mongo:latest
     container_name: labo-mongodb
