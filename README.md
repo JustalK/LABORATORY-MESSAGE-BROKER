@@ -9,6 +9,7 @@ This project is a project for testing how to use multiple servers, how to make t
 - **Server1 && Server2:** Communication between server using Redis
 - **Server3:** Connection of the server to the container `mongodb`
 - **Server4 && Server5:** Communication between server using Axios and http request
+- **Server6 && Server7:** Communication between server using RabbitMQ
 
 ## Docker-compose
 

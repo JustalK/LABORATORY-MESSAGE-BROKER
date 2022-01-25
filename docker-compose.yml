@@ -117,5 +117,29 @@ services:
       - mongodb
     networks:
       kevin-network:
+  server6:
+    build: ./server6
+    container_name: labo-server6
+    environment:
+      - VIRTUAL_HOST=api.server6.net
+      - VIRTUAL_PORT=3000
+    ports:
+      - "3005:3000"
+    depends_on:
+      - rabbitmq
+    networks:
+      kevin-network:
+  server7:
+    build: ./server7
+    container_name: labo-server7
+    environment:
+      - VIRTUAL_HOST=api.server7.net
+      - VIRTUAL_PORT=3000
+    ports:
+      - "3006:3000"
+    depends_on:
+      - rabbitmq
+    networks:
+      kevin-network:
 networks:
   kevin-network:
