@@ -7,21 +7,42 @@ const app = express()
 app.use(express.json())
 
 
+function generateUuid() {
+  return Math.random().toString() +
+         Math.random().toString() +
+         Math.random().toString();
+}
+
 // Create a test endpoint
 app.get('/', async (req, res) => {
   res.status(200).send('SERVER 7');
 })
 
 app.get('/server6', async (req, res) => {
+  const correlationId = generateUuid();
+  const num = parseInt(10);
+
   const connection = await amqp.connect('amqp://guess:guess@rabbitmq');
   const channel = await connection.createChannel();
   const queue = 'hello';
   const q = await channel.assertQueue('', {durable: false});
-  channel.consume(queue, function(msg) {
-      console.log(" [x] Received %s", msg.content.toString());
+  channel.consume(q.queue, function(msg) {
+    if (msg.properties.correlationId == correlationId) {
+       console.log(' [.] Got %s', msg.content.toString());
+       res.status(200).send({
+         result: msg.content.toString()
+       });
+     }
   }, {
       noAck: true
   });
+
+  channel.sendToQueue(queue,
+    Buffer.from(num.toString()),{
+      correlationId: correlationId,
+      replyTo: q.queue
+    }
+  );
 })
 
 // Start the webserver.

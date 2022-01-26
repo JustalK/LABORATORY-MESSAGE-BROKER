@@ -12,14 +12,27 @@ amqp.connect('amqp://guess:guess@rabbitmq', function(error0, connection) {
       throw error1;
     }
     var queue = 'hello';
-    var msg = 'Hello world';
 
     channel.assertQueue(queue, {
       durable: false
     });
 
-    channel.sendToQueue(queue, Buffer.from(msg));
-    console.log(" [x] Sent %s", msg);
+    channel.prefetch(1);
+    console.log(' [x] Awaiting RPC requests');
+
+    channel.consume(queue, function reply(msg) {
+      const n = parseInt(msg.content.toString());
+      console.log("NUMBER: ", n);
+
+      var r = n * 10;
+
+      channel.sendToQueue(msg.properties.replyTo,
+        Buffer.from(r.toString()), {
+          correlationId: msg.properties.correlationId
+        });
+
+      channel.ack(msg);
+    });
   });
 });
 
