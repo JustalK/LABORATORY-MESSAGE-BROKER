@@ -1,17 +1,11 @@
 // Import packages.
 const express = require('express')
 const amqp = require('amqplib');
+const { v4: uuidv4 } = require('uuid');
 
 // Create and configure a webserver.
 const app = express()
 app.use(express.json())
-
-
-function generateUuid() {
-  return Math.random().toString() +
-         Math.random().toString() +
-         Math.random().toString();
-}
 
 // Create a test endpoint
 app.get('/', async (req, res) => {
@@ -19,7 +13,7 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/server6', async (req, res) => {
-  const correlationId = generateUuid();
+  const correlationId = uuidv4();
   const num = parseInt(10);
 
   const connection = await amqp.connect('amqp://guess:guess@rabbitmq');
