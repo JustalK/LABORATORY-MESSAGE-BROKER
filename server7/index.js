@@ -2,6 +2,7 @@
 const express = require('express')
 const amqp = require('amqplib');
 const { v4: uuidv4 } = require('uuid');
+let channel;
 
 // Create and configure a webserver.
 const app = express()
@@ -16,13 +17,11 @@ app.get('/server6', async (req, res) => {
   const correlationId = uuidv4();
   const num = parseInt(10);
 
-  const connection = await amqp.connect('amqp://guess:guess@rabbitmq');
-  const channel = await connection.createChannel();
   const queue = 'hello';
   const q = await channel.assertQueue('', {durable: false});
   channel.consume(q.queue, function(msg) {
     if (msg.properties.correlationId == correlationId) {
-       console.log(' [.] Got %s', msg.content.toString());
+       console.log('%s', msg.content.toString());
        res.status(200).send({
          result: msg.content.toString()
        });
@@ -32,14 +31,18 @@ app.get('/server6', async (req, res) => {
   });
 
   channel.sendToQueue(queue,
-    Buffer.from(num.toString()),{
-      correlationId: correlationId,
-      replyTo: q.queue
-    }
+    Buffer.from(
+      num.toString()),
+      {
+        correlationId: correlationId,
+        replyTo: q.queue
+      }
   );
 })
 
 // Start the webserver.
-app.listen(3000, () => {
+app.listen(3000, async () => {
     console.log('Server is up on port 3000')
+    const connection = await amqp.connect('amqp://guess:guess@rabbitmq');
+    channel = await connection.createChannel();
 })
