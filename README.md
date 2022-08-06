@@ -1,4 +1,4 @@
-# LABORATORY-DOCKER-COMPOSE
+# LABORATORY-MESSAGE-BROKER
 
 ## Description
 
@@ -38,10 +38,13 @@ For adding a new proxy, be sure to do those two step:
 
 1. Give the two environment variables `VIRTUAL_HOST` and `VIRTUAL_PORT` in the docker-compose to the services you want to proxy.
 2. Create a line in the host file with the following command:
+
 ```
 $ sudo nano /etc/host
 ```
+
 Then add the following line:
+
 ```
 127.0.0.1 api.server1.net api.server2.net api.server3.net
 ```
